@@ -1,4 +1,4 @@
-#variable "public_ip" {}
+variable "public_ip" {}
 provider "aws" {
   region     = "eu-west-1"
 }
@@ -95,8 +95,7 @@ resource "aws_vpn_gateway" "gokrb5" {
 
 resource "aws_customer_gateway" "gokrb5" {
   bgp_asn    = 65000
-  ip_address = "51.6.250.198"
-  #ip_address = "${var.public_ip}"
+  ip_address = "${var.public_ip}"
   type       = "ipsec.1"
 }
 
