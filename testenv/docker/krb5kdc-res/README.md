@@ -1,4 +1,4 @@
-# KDC Intergation Test Instance for RESDOM.GOKRB5
+# KDC Integration Test Instance for RESDOM.GOKRB5
 
 DO NOT USE THIS CONTAINER FOR ANY PRODUCTION USE!!!
 

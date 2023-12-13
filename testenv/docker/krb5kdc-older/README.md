@@ -1,4 +1,4 @@
-# KDC Intergation Test Instance for TEST.GOKRB5
+# KDC Integration Test Instance for TEST.GOKRB5
 
 DO NOT USE THIS CONTAINER FOR ANY PRODUCTION USE!!!
 
