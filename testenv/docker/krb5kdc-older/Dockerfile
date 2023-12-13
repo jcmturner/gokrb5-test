@@ -5,6 +5,10 @@ EXPOSE 88
 
 ENTRYPOINT ["/usr/local/sbin/krb5kdc", "-n"]
 
+RUN cd /etc/yum.repos.d/ \
+ && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
+ && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
 RUN yum install -y \
   tcpdump krb5-workstation vim \
   ncurses telnet ncurses-devel tcl net-tools \
