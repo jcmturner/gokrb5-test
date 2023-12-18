@@ -4,6 +4,10 @@ MAINTAINER Jonathan Turner <jt@jtnet.co.uk>
 EXPOSE 88
 ENTRYPOINT ["/usr/sbin/krb5kdc", "-n"]
 
+RUN cd /etc/yum.repos.d/ \
+ && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
+ && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
 RUN yum install -y \
   krb5-server \
   tcpdump krb5-workstation vim \

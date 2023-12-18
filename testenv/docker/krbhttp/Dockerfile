@@ -7,6 +7,10 @@ ENV KRB5RCACHEDIR=/var/tmp
 ENV KRB5RCACHETYPE=dfl
 ENTRYPOINT ["/usr/sbin/httpd", "-DFOREGROUND"]
 
+RUN cd /etc/yum.repos.d/ \
+ && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
+ && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
 RUN yum install -y \
   httpd \
   mod_auth_kerb \

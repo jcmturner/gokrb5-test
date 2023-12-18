@@ -7,11 +7,11 @@ There are two options to run these services.
 2. As a vagrant VM instances.
 
 ## Docker Containers
-The Docker containers can be run with the commands you see in the ```before_install``` section of the 
-[.travis.yml](https://github.com/jcmturner/gokrb5/blob/master/.travis.yml) file.
+The Docker containers can be run with the commands you see in the ```Start integration test dependencies``` job of the 
+[testing.yml](https://github.com/jcmturner/gokrb5/blob/master/.github/workflows/testing.yml#L60C15-L60C50) file.
 You will need to set the environment variable ```TEST_KDC_ADDR``` to "127.0.0.1" when running the integration tests.
 
-## Vagant VM Instance
+## Vagrant VM Instance
 The Vagrant VM instance has been configured to work with VirtualBox.
 VirtualBox will need to be configured with a host network. In the Vagrantfile configuration the CIDR range for that 
 network is assumed to be 10.80.0.0/16 and the instance will run on 10.80.88.88. If this does not work for your environment you will need to update the 

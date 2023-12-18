@@ -1,11 +1,11 @@
 #!/bin/bash
 
-REALM=TEST.GOKRB5
-DOMAIN=test.gokrb5
-SERVER_HOST=kdc.test.gokrb5
+REALM=SUB.TEST.GOKRB5
+DOMAIN=sub.test.gokrb5
+SERVER_HOST=kdc.sub.test.gokrb5
 ADMIN_USERNAME=adminuser
-HOST_PRINCIPALS="kdc.test.gokrb5 host.test.gokrb5"
-SPNs="HTTP/host.test.gokrb5"
+HOST_PRINCIPALS="kdc.sub.test.gokrb5 host.sub.test.gokrb5"
+SPNs="HTTP/host.sub.test.gokrb5"
 
 create_entropy() {
    while true
@@ -39,18 +39,20 @@ ENTROPY_PID=$!
     done
   fi
 
-  /usr/sbin/kadmin.local -q "add_principal -pw spnpasswordvalue -kvno 1 HTTP/host.test.gokrb5"
-  /usr/sbin/kadmin.local -q "add_principal -pw dnspasswordvalue -kvno 1 DNS/ns.test.gokrb5"
-
+if [ ! -z "${SPNs}" ]; then
+    for spn in ${SPNs}
+    do
+      /usr/sbin/kadmin.local -q "add_principal -pw spnpasswordvalue -kvno 1 $spn"
+    done
+  fi
 
   /usr/sbin/kadmin.local -q "add_principal -pw passwordvalue -kvno 1 testuser1"
   /usr/sbin/kadmin.local -q "add_principal +requires_preauth -pw passwordvalue -kvno 1 testuser2"
   /usr/sbin/kadmin.local -q "add_principal -pw passwordvalue -kvno 1 testuser3"
 
   # Set up trust
-  /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/TEST.GOKRB5@RESDOM.GOKRB5"
-  /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/RESDOM.GOKRB5@TEST.GOKRB5"
-  /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/TEST.GOKRB5@SUB.TEST.GOKRB5"
   /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/SUB.TEST.GOKRB5@TEST.GOKRB5"
+  /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/TEST.GOKRB5@SUB.TEST.GOKRB5"
+
 
   echo "Kerberos initialisation complete"
